@@ -11,9 +11,12 @@ def text_indentation(text):
         raise TypeError("text must be a string")
 
     for delimiter in "?:.":
-        text = text.replace(delimiter, delimiter + "\n\n")
+        words = text.replace(delimiter, delimiter + "\n\n")
+        text = (delimiter + "\n\n").join([index.strip(" ") for index in words.split(delimiter)])
 
-        print (text)
+    print(text)
+
+
 if __name__ == "__main__":
     import doctest
     doctest.testfile("tests/5-text_indentation.txt")
