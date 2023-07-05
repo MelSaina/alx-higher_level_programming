@@ -90,20 +90,20 @@ Test string with spaces:
 >>> text_indentation("Holberton    ")
 Holberton
 Test all delimeters!:
->>> text_indentation("Hello: Holberton? school. mooo")
+>>> text_indentation("Hello: Holberton? school. fooo")
 Hello:
 <BLANKLINE>
 Holberton?
 <BLANKLINE>
 school.
 <BLANKLINE>
-mooo
+fooo
 Test all delimeters with some spaces:
->>> text_indentation("Hello   :   Holberton  ?  school.  mooo")
+>>> text_indentation("Hello   :   Holberton  ?  school.  fooo")
 Hello:
 <BLANKLINE>
 Holberton?
 <BLANKLINE>
 school.
 <BLANKLINE>
-mooo
+fooo
