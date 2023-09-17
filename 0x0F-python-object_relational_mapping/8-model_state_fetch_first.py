@@ -1,34 +1,26 @@
 #!/usr/bin/python3
-"""Print the first State object from the database."""
+"""
+Script that prints the first State object from the database
+"""
 
-import sys
 from model_state import Base, State
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sys import argv
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print("Usage: {} <mysql username> <mysql password> <database name>".format(sys.argv[0]))
-        sys.exit(1)
+    # create an engine
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(
+        argv[1], argv[2], argv[3]), pool_pre_ping=True)
 
-    username = sys.argv[1]
-    password = sys.argv[2]
-    database = sys.argv[3]
+    Session = sessionmaker()
+    session = Session(bind=engine)
 
-    # Create the database engine
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(username, password, database), pool_pre_ping=True)
+    Base.metadata.create_all(engine)
+    s_tate = session.query(State).order_by(State.id).first()
 
-    # Create a session to interact with the database
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
-    # Query the first State object in ascending order by states.id
-    first_state = session.query(State).order_by(State.id).first()
-
-    if first_state:
-        print("{}: {}".format(first_state.id, first_state.name))
+    if s_tate:
+        print("{}: {}".format(s_tate.id, s_tate.name))
     else:
         print("Nothing")
-
-    # Close the session
     session.close()
