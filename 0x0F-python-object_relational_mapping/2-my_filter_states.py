@@ -6,25 +6,22 @@ table of hbtn_0e_0_usa where name matches the argument
 import MySQLdb
 from sys import argv
 
+# The code should not be executed when imported
 if __name__ == '__main__':
-    # Extract command-line arguments
-    username, password, database, state_name = argv[1], argv[2], argv[3], argv[4]
 
-    # Connect to the MySQL database running on localhost at port 3306
-    db = MySQLdb.connect(host="localhost", port=3306, user=username, passwd=password, db=database)
+    # make a connection to the database
+    db = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
+                         passwd=argv[2], db=argv[3])
 
-    # Create a cursor object
+    # It gives us the ability to have multiple seperate working environments
+    # through the same connection to the database.
     cur = db.cursor()
+    nmeSr = "SELECT * FROM states WHERE name LIKE BINARY '{}'".format(argv[4])
+    cur.execute(nmeSr)
 
-    # Create and execute the SQL query
-    query = "SELECT * FROM states WHERE name = %s ORDER BY id ASC"
-    cur.execute(query, (state_name,))
-
-    # Fetch all the rows and display them as specified
     rows = cur.fetchall()
-    for row in rows:
-        print(row)
-
-    # Clean up
+    for i in rows:
+        print(i)
+    # Clean up process
     cur.close()
     db.close()
