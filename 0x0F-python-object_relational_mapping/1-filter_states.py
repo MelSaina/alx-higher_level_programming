@@ -26,8 +26,8 @@ if __name__ == "__main__":
         # Create a cursor object
         cursor = db.cursor()
 
-        # Execute the SQL query to retrieve states starting with 'N' in ascending order by states.id
-        cursor.execute("SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC")
+        # Execute the SQL query to retrieve states starting with 'N' in a case-sensitive manner
+        cursor.execute("SELECT * FROM states WHERE name LIKE BINARY 'N%' ORDER BY id ASC")
 
         # Fetch all the rows and display them as they are in the example
         rows = cursor.fetchall()
