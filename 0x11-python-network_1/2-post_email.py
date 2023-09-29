@@ -24,8 +24,6 @@ data = urllib.parse.urlencode(data).encode('utf-8')
 
 # Create a POST request with the provided URL and data
 request = urllib.request.Request(url, data=data, method='POST')
-
-# Perform the POST request and handle the response
 with urllib.request.urlopen(request) as response:
     body = response.read().decode('utf-8')
     print("Your email is:", email)
