@@ -4,27 +4,17 @@
 Usage: ./2-post_email.py <URL> <email>
   - Displays the body of the response.
 """
-import sys
+from sys import argv
 import urllib.parse
 import urllib.request
-# Check if the script is called with the correct number of arguments
-if len(sys.argv) != 3:
-    print("Usage: ./2-post_email.py <URL> <email>")
-    sys.exit(1)
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
 
-# Extract the URL and email from command line arguments
-url = sys.argv[1]
-email = sys.argv[2]
+if __name__ == "__main__":
+    url = argv[1]
+    value = {"email": argv[2]}
+    data = urlencode(value).encode("ascii")
+    req = Request(url, data)
 
-# Create a dictionary with the email parameter
-data = {'email': email}
-
-# Encode the data to be sent in the POST request
-data = urllib.parse.urlencode(data).encode('utf-8')
-
-# Create a POST request with the provided URL and data
-request = urllib.request.Request(url, data=data, method='POST')
-with urllib.request.urlopen(request) as response:
-    body = response.read().decode('utf-8')
-    print("Your email is:", email)
-    print(body)
+    with urlopen(req) as response:
+        print(response.read().decode("utf-8", "replace"))
